@@ -1,2 +1,2 @@
-let final = temp1.Questions.map((questionObj) =>{ return  questionObj.Answers }).map((finalAns) =>{ let answer = []; for(let i = 0; i<finalAns.length; i++ ){if(finalAns[i].IsCorrect){answer.push(finalAns[i].AnswerText);} } return answer} );
+let final = $_.Questions.map((questionObj) =>{ return  questionObj.Answers }).map((finalAns) =>{ let answer = []; for(let i = 0; i<finalAns.length; i++ ){if(finalAns[i].IsCorrect){answer.push(finalAns[i].AnswerText);} } return answer} );
 console.log(final);
