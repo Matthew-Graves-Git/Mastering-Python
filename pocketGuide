@@ -1,2 +1,19 @@
 let final = $_.Questions.map((questionObj) =>{ return  questionObj.Answers }).map((finalAns) =>{ let answer = []; for(let i = 0; i<finalAns.length; i++ ){if(finalAns[i].IsCorrect){answer.push(finalAns[i].AnswerText);} } return answer} );
 console.log(final);
+let current = 0;
+let chekBoxList = document.querySelectorAll('ion-checkbox');
+let submit = document.querySelectorAll('ion-button')
+submit = submit[submit.length -1];
+if(chekBoxList.length < 6){
+    for(let i = 0; i < chekBoxList.length  ;i++){
+        document.querySelectorAll('ion-checkbox')[i].shadowRoot.querySelector('button').click()
+        chekBoxList[i] = chekBoxList[i].getAttribute('aria-labelledby');
+    };
+
+    submit.click()
+}else{
+ for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
+    let checkId = chekBoxList[i].getAttribute('aria-labelledby');
+    let optionText = document.getElementById(checkId).querySelector('div').innerHTML
+}
+}
