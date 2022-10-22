@@ -9,11 +9,20 @@ if(chekBoxList.length < 6){
         document.querySelectorAll('ion-checkbox')[i].shadowRoot.querySelector('button').click()
         chekBoxList[i] = chekBoxList[i].getAttribute('aria-labelledby');
     };
-
-    submit.click()
 }else{
  for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
     let checkId = chekBoxList[i].getAttribute('aria-labelledby');
-    let optionText = document.getElementById(checkId).querySelector('div').innerHTML
+    let optionText = document.getElementById(checkId).querySelector('div').innerHTML;
+    console.log(optionText);
+    if(final[current].filter((element) => element === optionText).length > 0){
+        console.log(final[current].filter((element) => element === optionText).length);
+        chekBoxList[i].shadowRoot.querySelector('button').click()
+    }
+    
 }
+submit.click()
+let submit = document.querySelectorAll('ion-button')
+submit = submit[submit.length -1];
 }
+current++;
+submit.click()
