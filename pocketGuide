@@ -1,25 +1,31 @@
 let final = $_.Questions.map((questionObj) =>{ return  questionObj.Answers }).map((finalAns) =>{ let answer = []; for(let i = 0; i<finalAns.length; i++ ){if(finalAns[i].IsCorrect){answer.push(finalAns[i].AnswerText);} } return answer} );
 console.log(final);
 let current = 0;
+let prevCheckboxLength = 0;
 let chekBoxList = document.querySelectorAll('ion-checkbox');
 let submit = document.querySelectorAll('ion-button')
 submit = submit[submit.length -1];
-if(chekBoxList.length < 6){
-    for(let i = 0; i < chekBoxList.length  ;i++){
+let currCheckboxLength = chekBoxList.length - prevCheckboxLength
+if(currCheckboxLength === 0){
+  console.log('buttons');
+    
+}else if(currCheckboxLength < 4){
+    for(let i = chekBoxList.length -1; i >= prevCheckboxLength  ;i--){
         document.querySelectorAll('ion-checkbox')[i].shadowRoot.querySelector('button').click()
         chekBoxList[i] = chekBoxList[i].getAttribute('aria-labelledby');
     };
+     
 }else{
- for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
-    let checkId = chekBoxList[i].getAttribute('aria-labelledby');
-    let optionText = document.getElementById(checkId).querySelector('div').innerHTML;
-    console.log(optionText);
-    if(final[current].filter((element) => element === optionText).length > 0){
-        console.log(final[current].filter((element) => element === optionText).length);
-        chekBoxList[i].shadowRoot.querySelector('button').click()
-    }
-    
+    for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
+        let checkId = chekBoxList[i].getAttribute('aria-labelledby');
+        let optionText = document.getElementById(checkId).querySelector('div').innerHTML;
+        console.log(optionText);
+        if(final[current].filter((element) => element === optionText).length > 0){
+            console.log(final[current].filter((element) => element === optionText).length);
+            chekBoxList[i].shadowRoot.querySelector('button').click()
+        }
 }
+prevCheckboxLength = chekBoxList.length;
 submit.click()
 let submit = document.querySelectorAll('ion-button')
 submit = submit[submit.length -1];
