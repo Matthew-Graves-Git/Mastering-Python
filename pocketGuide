@@ -2,6 +2,7 @@
 // intial setup
 
 sessionStorage.setItem('prev',0);
+sessionStorage.setItem('answer','');
 
 // end initial setup
 
@@ -11,7 +12,25 @@ submit = submit[submit.length -1];
 let prevCheckboxLength = parseInt(sessionStorage.getItem('prev'));
 let currCheckboxLength = chekBoxList.length - prevCheckboxLength;
 if(currCheckboxLength === 0){
-  console.log('buttons');
+    if(sessionStorage.getItem('answer') === ''){
+        let answers = document.querySelectorAll('ion-radio');
+        answers = answers[answers.length-1].shadowRoot.querySelector('button').click();
+        submit.click();
+        if(document.getElementsByClassName("correct").length === 0 ){
+            sessionStorage.setItem('answer', document.getElementsByClassName('icon-correct')[0].parentNode.parentNode.innerText);
+            location.reload();
+        }
+    }else{
+            let x = document.querySelectorAll('ion-item');
+            x.forEach((ionNode) =>{
+                if(ionNode.innerText === sessionStorage.getItem('answer')){
+                    ionNode.querySelector('ion-radio').shadowRoot.querySelector('button').click();
+                    sessionStorage.setItem('answer', '');
+                }
+        
+            } );
+        
+    }
     
 }else if(currCheckboxLength < 4){
     
@@ -32,9 +51,10 @@ if(currCheckboxLength === 0){
         }
 }
 prevCheckboxLength = chekBoxList.length;
-submit.click()
-let submit = document.querySelectorAll('ion-button')
+submit.click();
+let submit = document.querySelectorAll('ion-button');
 submit = submit[submit.length -1];
 }
-current++;
-submit.click()
+submit.click();
+
+
