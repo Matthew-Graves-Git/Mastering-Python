@@ -1,13 +1,5 @@
-
-// intial setup
-
-sessionStorage.setItem('prev',0);
-sessionStorage.setItem('answer','');
-
-// end initial setup
-
 let chekBoxList = document.querySelectorAll('ion-checkbox');
-let submit = document.querySelectorAll('ion-button')
+let submit = document.querySelectorAll('ion-button');
 submit = submit[submit.length -1];
 let prevCheckboxLength = parseInt(sessionStorage.getItem('prev'));
 let currCheckboxLength = chekBoxList.length - prevCheckboxLength;
@@ -44,38 +36,38 @@ if(currCheckboxLength === 0){
     sessionStorage.setItem('prev', chekBoxList.length );
      
 }else{
-    for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
-        let checkId = chekBoxList[i].getAttribute('aria-labelledby');
-        let optionText = document.getElementById(checkId).querySelector('div').innerHTML;
-        console.log(optionText);
-        if(final[current].filter((element) => element === optionText).length > 0){
-            console.log(final[current].filter((element) => element === optionText).length);
-            chekBoxList[i].shadowRoot.querySelector('button').click()
+    if(sessionStorage.getItem('answer') === ''){
+        for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
+            chekBoxList[i].shadowRoot.querySelector('button').click();
         }
-    }
-prevCheckboxLength = chekBoxList.length;
-submit.click();
-let submit = document.querySelectorAll('ion-button');
-submit = submit[submit.length -1];
-}
-submit.click();
-
-
-
-if(sessionStorage.getItem('answer') === ''){
-    for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
-        chekBoxList[i].shadowRoot.querySelector('button').click();
-    }
-    submit.click();
-    if(document.getElementsByClassName("wrong").length === 1){
         
-
+        if(document.getElementsByClassName("wrong").length === 1){
+            let correctArr = Array.from(document.getElementsByClassName('icon-correct'));
+            correctArr = correctArr.map( (checkAnswer) => {
+                return checkAnswer.parentNode.parentNode.innerText;
+            });
+            sessionStorage.setItem('answer',correctArr);
+            document.querySelectorAll('ion-button')[document.querySelectorAll('ion-button').length-1].click();
+            history.go(0);
+        }
+    
+    
+    
     }
+    else{
+        let correctArr = sessionStorage.getItem('answer').split(',');
+        for(let i = chekBoxList.length - 1 ; i >= chekBoxList.length -4  ;i--){   
+            if(correctArr.includes(chekBoxList[i].innerText)){
+                chekBoxList[i].shadowRoot.querySelector('button').click();
+            }
+        }
+        sessionStorage.setItem('answer','');
+        document.querySelectorAll('ion-button')[document.querySelectorAll('ion-button').length-1].click();
+        sessionStorage.setItem('prev',chekBoxList.length);
+    } 
 
-
-}   
-prevCheckboxLength = chekBoxList.length;
-submit.click();
+document.querySelectorAll('ion-button')[document.querySelectorAll('ion-button').length-1].click();
 let submit = document.querySelectorAll('ion-button');
 submit = submit[submit.length -1];
 }
+submit.click();
